@@ -1,0 +1,217 @@
+/* ==========================================================================
+   Lumiverse port
+   --------------------------------------------------------------------------
+   Everything above this is the SillyTavern stylesheet, unchanged. These rules
+   are for what only exists here: the window lives in a host app mount, the
+   launcher is a host float widget, the block card is injected into a bubble the
+   host rendered, and popups are host modals.
+   ========================================================================== */
+
+/* The app mount carries the overlay's id, so style.css lays it out; it is shown
+   by class rather than by jQuery's fadeIn. */
+#prompt-slot-modal-overlay.megumin-open {
+    display: flex;
+}
+
+/* ── Launcher ─────────────────────────────────────────────────────────────
+   Inside the float widget the button must not position itself: the widget
+   does. `chromeless` means the button is the whole widget. */
+.meg-float {
+    width: 100%;
+    height: 100%;
+}
+
+.meg-float #prompt-slot-fixed-btn,
+.meg-float .meg-float-btn {
+    position: static !important;
+    inset: auto !important;
+    transform: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    border-radius: 50%;
+    background: linear-gradient(145deg, #1f2937, #111827);
+    color: var(--gold, #f59e0b);
+    cursor: grab;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+}
+
+.meg-float .meg-float-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.meg-float .meg-float-btn svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+/* Master switch off: the launcher dims, as in SillyTavern. */
+.meg-float .meg-float-btn.ps-suite-off {
+    opacity: 0.45;
+    filter: grayscale(1);
+}
+
+/* ── The block card in a message ──────────────────────────────────────────
+   Its own full-width row under the reply. The host lays a message out in
+   flex rows on some layouts; without flex-basis the card became a column
+   beside the text and, on a phone, squeezed the text down to one letter per
+   line. */
+.meg-blocks-host {
+    display: block;
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-top: 10px;
+    box-sizing: border-box;
+    clear: both;
+}
+
+.meg-blocks-host .meg-blocks {
+    max-width: 100%;
+}
+
+/* ── Header buttons ───────────────────────────────────────────────────── */
+#ps_btn_close {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* ── Failure states ───────────────────────────────────────────────────── */
+.megumin-boot-error,
+.megumin-tab-error {
+    padding: 20px;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.07);
+    color: #fca5a5;
+}
+
+/* ── Popups (host modals) ─────────────────────────────────────────────── */
+.megumin-popup {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main, #f4f4f5);
+    --bg-main: #0e0e11;
+    --bg-panel: #18181b99;
+    --border-color: #27272a;
+    --text-main: #f4f4f5;
+    --text-muted: #a1a1aa;
+    --accent-color: #ffffff;
+    --gold: #f59e0b;
+}
+
+.megumin-popup-body {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.megumin-popup-input {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--text-main, #e5e7eb);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+textarea.megumin-popup-input {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.megumin-popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.megumin-popup-actions button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #333);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-main, #e5e7eb);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.megumin-popup-actions .megumin-popup-ok {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Icons are inline SVGs here rather than a webfont (see lumi/icon.js). */
+svg.svg-inline--fa {
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+    display: inline-block;
+}
+
+/* A filled icon: the <i> keeps every rule SillyTavern's stylesheet gives it,
+   and the SVG inside follows its font-size and colour. */
+i.meg-fa {
+    display: inline-block;
+    line-height: 1;
+    font-style: normal;
+}
+i.meg-fa > svg {
+    height: 1em;
+    width: auto;
+    display: block;
+    fill: currentColor;
+}
+i.meg-fa.fa-spin > svg {
+    animation: meg-fa-spin 1s linear infinite;
+}
+@keyframes meg-fa-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Generated images ─────────────────────────────────────────────────────
+   A click opens the viewer (full size, prompt, Regenerate). */
+img[alt="KazumaInline"] {
+    cursor: zoom-in;
+}
+.kazuma-viewer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.kazuma-viewer-img {
+    max-width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    border-radius: 10px;
+    align-self: center;
+}
+.kazuma-viewer-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted, #a1a1aa);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.kazuma-viewer-prompt {
+    width: 100%;
+    min-height: 90px;
+    resize: vertical;
+    font-family: monospace;
+    font-size: 0.8rem;
+    box-sizing: border-box;
+}
+img[data-kazumaid], .kazuma-img-wrapper img {
+    cursor: zoom-in;
+}

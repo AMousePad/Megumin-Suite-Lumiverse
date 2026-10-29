@@ -1,11 +1,11 @@
 {
-  "version": "10.0",
+  "version": "11.0",
   "name": "Megumin Suite",
   "identifier": "megumin_suite",
   "author": "KazumaONIISAN",
   "github": "https://github.com/Arif-salah/Megumin-Suite-Lumiverse",
   "homepage": "https://github.com/Arif-salah/Megumin-Suite-Lumiverse",
-  "description": "Preset engine, story director, block trackers, NPC bank and image generation for Lumiverse.",
+  "description": "Preset engine, World State, Chomusuke helper model, block trackers, NPC bank, story director and image generation for Lumiverse.",
   "permissions": [
     "interceptor",
     "generation",
@@ -15,12 +15,12 @@
     "personas",
     "image_gen",
     "images",
-    "presets",
     "ui_panels",
-    "app_manipulation"
+    "app_manipulation",
+    "cors_proxy"
   ],
   "entry_backend": "dist/backend.js",
   "entry_frontend": "dist/frontend.js",
-  "interceptorTimeoutMs": 30000,
+  "interceptorTimeoutMs": 300000,
   "minimum_lumiverse_version": "0.1.0"
 }
